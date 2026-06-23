@@ -50,7 +50,7 @@ st.info("🤖 AI Model Connected and Ready")
 col1, col2, col3 = st.columns(3)
 
 col1.metric("📊 Tables", "11")
-col2.metric("🤖 Model", "Llama3")
+col2.metric("🤖 Model", "Groq Llama3")
 col3.metric("💾 Database", "SQLite")
 
 st.markdown("Convert Natural Language into SQL Queries using Llama 3")
@@ -78,21 +78,21 @@ Convert the following natural language text into a valid SQL query.
 Return only the SQL query.
 Do not provide explanations.
 Do not use markdown.
-    Text:
-    {user_text}
-    """
+Text:
+{user_text}
+"""
 
     response = client.chat.completions.create(
-    model="llama3-8b-8192",
-    messages=[
-        {
-            "role": "user",
-            "content": prompt
-        }
-    ]
-)
+        model="llama3-8b-8192",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+    )
 
-sql_query = response.choices[0].message.content
+    sql_query = response.choices[0].message.content
     
     if user_text.strip():
         st.session_state.history.append(user_text)
