@@ -83,7 +83,7 @@ Text:
 """
 
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant"
+        model="llama-3.1-8b-instant",
         messages=[
             {
                 "role": "user",
