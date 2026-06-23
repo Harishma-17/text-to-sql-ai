@@ -1,5 +1,5 @@
 import streamlit as st
-from ollama import chat
+from groq import Groq
 import sqlite3
 import time
 
@@ -7,6 +7,9 @@ st.set_page_config(
     page_title="Text to SQL AI",
     page_icon="🤖",
     layout="wide"
+)
+client = Groq(
+    api_key=st.secrets["GROQ_API_KEY"]
 )
 st.markdown("""
 <style>
@@ -79,14 +82,17 @@ Do not use markdown.
     {user_text}
     """
 
-    response = chat(
-        model="llama3",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
+    response = client.chat.completions.create(
+    model="llama3-8b-8192",
+    messages=[
+        {
+            "role": "user",
+            "content": prompt
+        }
+    ]
+)
 
-    sql_query = response["message"]["content"]
+sql_query = response.choices[0].message.content
     
     if user_text.strip():
         st.session_state.history.append(user_text)
